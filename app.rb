@@ -1,16 +1,23 @@
-require_relative 'config/environment'
+require 'bundler'
+Bundler.require 
+require_relative 'models/ecogov'
 
 class App < Sinatra::Base
-  get '/reverse' do
-    erb :reverse
-  end
 
-  post '/reverse' do
-    erb :reversed
-  end
+  # configure do
+  #   set :public_folder, 'public'
+  #   set :views, 'app/views'
+  # end
 
-  get '/friends' do
-    # Write your code here!
-
+  get '/' do
+    erb :ecogov
   end
-end
+  
+  
+  post '/results' do 
+    answers = params[:state]
+    @user_value = answers.to_s
+    @senators = your_senators(@user_value)
+    erb :senators
+  end 
+end 
